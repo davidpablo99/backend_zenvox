@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { PrismaService } from "../../prisma/prisma.service";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UsersService {
@@ -32,11 +33,13 @@ export class UsersService {
       throw new BadRequestException("birthDate inválido");
     }
 
+    const passwordHash = await bcrypt.hash(password, 10);
+
     return this.prisma.user.create({
       data: {
         name,
         email,
-        password,
+        password: passwordHash,
         cpf,
         birthDate: parsedBirthDate,
         address,
