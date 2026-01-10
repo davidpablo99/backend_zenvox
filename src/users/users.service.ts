@@ -10,13 +10,14 @@ export class UsersService {
     email?: string;
     password?: string;
     birthDate?: string | Date;
+    address?: string;
     cpf?: string;
   }) {
     if (!data) {
       throw new BadRequestException("Body é obrigatório");
     }
 
-    const { name, email, password, birthDate, cpf } = data;
+    const { name, email, password, birthDate, cpf, address } = data;
 
     if (!name || !email || !password || !birthDate || !cpf) {
       throw new BadRequestException(
@@ -38,6 +39,7 @@ export class UsersService {
         password,
         cpf,
         birthDate: parsedBirthDate,
+        address,
       },
     });
   }

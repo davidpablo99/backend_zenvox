@@ -8,11 +8,14 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  email      String   @unique
-  password   String
-  cpf        String   @unique
-  birthDate  DateTime
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name      String
+  email     String   @unique
+  password  String
+  cpf       String   @unique
+  birthDate DateTime
+  address   String?
+
   created_at DateTime @default(now())
 }

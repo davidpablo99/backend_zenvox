@@ -7,6 +7,7 @@ export declare class UsersService {
         email?: string;
         password?: string;
         birthDate?: string | Date;
+        address?: string;
         cpf?: string;
     }): Promise<{
         name: string;
@@ -14,6 +15,7 @@ export declare class UsersService {
         password: string;
         birthDate: Date;
         cpf: string;
+        address: string | null;
         id: string;
         created_at: Date;
     }>;
@@ -23,6 +25,7 @@ export declare class UsersService {
         password: string;
         birthDate: Date;
         cpf: string;
+        address: string | null;
         id: string;
         created_at: Date;
     } | null>;

@@ -21,7 +21,7 @@ let UsersService = class UsersService {
         if (!data) {
             throw new common_1.BadRequestException("Body é obrigatório");
         }
-        const { name, email, password, birthDate, cpf } = data;
+        const { name, email, password, birthDate, cpf, address } = data;
         if (!name || !email || !password || !birthDate || !cpf) {
             throw new common_1.BadRequestException("Campos obrigatórios: name, email, password, birthDate, cpf");
         }
@@ -36,6 +36,7 @@ let UsersService = class UsersService {
                 password,
                 cpf,
                 birthDate: parsedBirthDate,
+                address,
             },
         });
     }
