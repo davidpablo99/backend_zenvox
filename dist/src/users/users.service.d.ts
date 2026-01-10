@@ -10,23 +10,23 @@ export declare class UsersService {
         address?: string;
         cpf?: string;
     }): Promise<{
+        id: string;
         name: string;
         email: string;
         password: string;
-        birthDate: Date;
         cpf: string;
+        birthDate: Date;
         address: string | null;
-        id: string;
         created_at: Date;
     }>;
     findByEmail(email: string): Promise<{
+        id: string;
         name: string;
         email: string;
         password: string;
-        birthDate: Date;
         cpf: string;
+        birthDate: Date;
         address: string | null;
-        id: string;
         created_at: Date;
     } | null>;
 }

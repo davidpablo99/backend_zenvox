@@ -3,16 +3,20 @@ import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { UsersModule } from "src/users/users.module";
 import { JwtModule } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
   providers: [AuthService],
   controllers: [AuthController],
   imports: [
     UsersModule,
-    JwtModule.register({
+    JwtModule.registerAsync({
       global: true,
-      secret: "zenvox-secret", //mudar para o .env
-      signOptions: { expiresIn: "7d" },
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>("JWT_SECRET"),
+        signOptions: { expiresIn: "7d" },
+      }),
+      inject: [ConfigService],
     }),
   ],
 })

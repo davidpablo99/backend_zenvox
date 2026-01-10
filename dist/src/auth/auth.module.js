@@ -12,6 +12,7 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const users_module_1 = require("../users/users.module");
 const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -21,10 +22,13 @@ exports.AuthModule = AuthModule = __decorate([
         controllers: [auth_controller_1.AuthController],
         imports: [
             users_module_1.UsersModule,
-            jwt_1.JwtModule.register({
+            jwt_1.JwtModule.registerAsync({
                 global: true,
-                secret: "zenvox-secret",
-                signOptions: { expiresIn: "7d" },
+                useFactory: (configService) => ({
+                    secret: configService.get("JWT_SECRET"),
+                    signOptions: { expiresIn: "7d" },
+                }),
+                inject: [config_1.ConfigService],
             }),
         ],
     })

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from "@nestjs/common";
 import { PrismaService } from "../../prisma/prisma.service";
 import * as bcrypt from "bcrypt";
 
@@ -31,6 +35,21 @@ export class UsersService {
 
     if (Number.isNaN(parsedBirthDate.getTime())) {
       throw new BadRequestException("birthDate inválido");
+    }
+
+    const userExists = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ email }, { cpf }],
+      },
+    });
+
+    if (userExists) {
+      if (userExists.email === email) {
+        throw new ConflictException("Email já está em uso");
+      }
+      if (userExists.cpf === cpf) {
+        throw new ConflictException("CPF já está em uso");
+      }
     }
 
     const passwordHash = await bcrypt.hash(password, 10);

@@ -63,6 +63,19 @@ let UsersService = class UsersService {
         if (Number.isNaN(parsedBirthDate.getTime())) {
             throw new common_1.BadRequestException("birthDate inválido");
         }
+        const userExists = await this.prisma.user.findFirst({
+            where: {
+                OR: [{ email }, { cpf }],
+            },
+        });
+        if (userExists) {
+            if (userExists.email === email) {
+                throw new common_1.ConflictException("Email já está em uso");
+            }
+            if (userExists.cpf === cpf) {
+                throw new common_1.ConflictException("CPF já está em uso");
+            }
+        }
         const passwordHash = await bcrypt.hash(password, 10);
         return this.prisma.user.create({
             data: {

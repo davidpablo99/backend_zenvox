@@ -11,13 +11,13 @@ export declare class UsersController {
         address?: string;
         cpf?: string;
     }): Promise<{
+        id: string;
         name: string;
         email: string;
         password: string;
-        birthDate: Date;
         cpf: string;
+        birthDate: Date;
         address: string | null;
-        id: string;
         created_at: Date;
     }>;
     me(req: Request): import("../auth/jwt.payload").JwtPayload | undefined;
